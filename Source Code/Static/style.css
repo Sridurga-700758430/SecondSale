@@ -1,0 +1,29 @@
+.chat {
+    position:absolute;
+    bottom:0px;
+    right:10px;
+    box-shadow: 0 0 10px #ccc;
+    width:300px;
+    height:400px;
+    border: 2px solid #ddd;
+    background-color:white;
+}
+.chat-body-messages{
+    height:280px;
+    overflow:auto;
+}
+.chat-toggle {
+    display:None;
+}
+
+.chat-close-btn{
+    cursor: pointer;
+}
+#btn-send{
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.message-text{
+    font-size: 10px;
+}
