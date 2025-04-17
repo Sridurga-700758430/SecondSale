@@ -1,0 +1,45 @@
+{% if session['role'] == "admin":%}
+    {% include 'ahead.html'%}
+{% elif session['role'] == "user":%}
+    {% include 'uhead.html'%}
+{% else:%}
+    {% include 'head.html'%}
+{% endif %}
+
+<div class="container mt-3">
+<h3 class="text-center">View Transactions</h3>
+<table style="width:100%" class="table table-bordered">
+  <tr>
+        <th>Buyer Name</th>
+        <th>Seller Name</th>
+        <th>Product Name</th>
+        <th>Amount</th>
+        <th>Seller Amount</th>
+        <th>Admin Amount</th>
+       <th>Date</th>
+      <th>Settlement Date</th>
+      <th>Status</th>
+
+  </tr>
+      {% for transaction in transactions%}
+        {% if transaction != None: %}
+        {% set seller = get_seller_by_transactions(transaction[9])%}
+        {% set buyer = get_buyer_by_transactions(transaction[8])%}
+        {% set product = get_product_by_transactions(transaction[7])%}
+          <tr>
+              <td>{{buyer[1]}}</td>
+              <td>{{seller[1]}}</td>
+              <td>{{product[1]}}</td>
+              <td>$ {{transaction[1]}}</td>
+              <td>$ {{transaction[2]}}</td>
+              <td>$ {{transaction[3]}}</td>
+              <td>{{transaction[5]}}</td>
+              <td>{{transaction[6]}}</td>
+              <td>{{transaction[4]}}</td>
+
+          </tr>
+    {% endif %}
+  {% endfor%}
+
+</table>
+</div>

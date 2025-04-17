@@ -1,0 +1,78 @@
+{% include 'uhead.html'%}
+<div class="container">
+    <div class="row">
+        {% for transaction in transactions%}
+        {% if transaction['settlement_date'] == None%}
+         {% set validation = get_settlement_date_hold(transaction[0])%}
+        {% endif%}
+        {% set product = get_product_by_transactions(transaction[7])%}
+         {% set product_seller = is_product_seller(product[0])%}
+        {% set sub_category = get_sub_category_by_transactions(product[7])%}
+        {% set category = get_category_by_transactions(sub_category[2])%}
+         {% set buyer = get_buyer_by_transactions(transaction[8])%}
+         {% set seller = get_seller_by_transactions(transaction[9])%}
+        <div class="col-md-4 mt-3">
+            <div class="card p-2">
+              <a href="view_details?product_id={{product[0]}}&seller_id={{seller[0]}}"><img src="/static/Product_Images/{{product[3]}}" style="width:100%;height:180px"></a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="h4 mt-1" style="margin-left:20px">{{product[1]}}</div>
+                </div>
+                 <div class="col-md-6">
+                     <div class="h4 mt-1 text-secondary" style="font-size:10px">Requested Amount:</div>
+                      <div class="h6 mt-1" style="margin-left:20px">$ {{transaction[1]}}</div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="h4  text-secondary" style="font-size:10px">Sub Category :</div>
+                    <div class="h4" style="font-size:12px">{{sub_category[1]}}</div>
+                </div>
+                 <div class="col-md-6">
+                     <div class="h4  text-secondary" style="font-size:10px">Category :</div>
+                      <div class="h4 " style="font-size:12px">{{category[1]}}</div>
+                 </div>
+                 <div class="col-md-6">
+                <div class="h4 mt-1 text-secondary" style="font-size:10px">Buyer :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{buyer[1]}}</div>
+                 </div>
+                  <div class="col-md-6">
+                <div class="h4 mt-1 text-secondary" style="font-size:10px">Seller :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{seller[1]}}</div>
+                 </div>
+                <div class="col-md-6">
+                <div class="h4 mt-1 text-secondary" style="font-size:10px">Status :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{transaction[4]}}</div>
+                 </div>
+
+            </div>
+
+                <div class="card-footer">
+                  <div class="row">
+                       {% if transaction[4] =='Requested'%}
+                       <form action="cancel_product" method="post">
+                             <input type="hidden" name="transaction_id" value="{{transaction[0]}}">
+                            <input type="submit" value="Cancel" class="btn btn-danger w-100">
+                       </form>
+                      {% endif%}
+                       {% if transaction[4] =='Accepted'%}
+                       <form action="pay_amount" method="post">
+                             <input type="hidden" name="transaction_id" value="{{transaction[0]}}">
+                           <input type="hidden" name="amount" value="{{transaction['requested_amount']}}">
+                            <input type="submit" value="Pay" class="btn btn-primary w-100">
+                       </form>
+                      {% endif%}
+                      {% if validation%}
+                      {% if transaction[4] =='Product sold'%}
+                       <form action="return_product" method="post">
+                             <input type="hidden" name="transaction_id" value="{{transaction[0]}}">
+                            <input type="submit" value="Return" class="btn btn-primary w-100">
+                       </form>
+                      {% endif%}
+                      {% endif%}
+                  </div>
+                </div>
+
+        </div>
+             </div>
+        {% endfor%}
+    </div>
+</div>

@@ -1,0 +1,29 @@
+{% include 'head.html'%}
+<style>
+body {
+  background-image: url("https://watermark.lovepik.com/photo/40008/0007.jpg_wh1200.jpg");
+  background-size: cover;
+}
+</style>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5">
+        <div class="card p-4 mt-5">
+            <form action="/uLogin1" method="post">
+                <div class="text-center h4">User Login</div>
+                <div class="form-group mt-1">
+                    <label class="email">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Enter Email" class="form-control mt-1" required>
+                </div>
+                <div class="form-group">
+                    <label class="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter Password" class="form-control mt-1" required>
+                </div>
+                <input type="submit" value="Login" class="btn btn-primary w-100 mt-3">
+                <div class="">New User?<a href="user_reg" class="">Click Here</a> </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,88 @@
+{% include 'uhead.html'%}
+<style>
+body {
+  background-image: url("https://t3.ftcdn.net/jpg/01/91/78/32/360_F_191783282_0TVrx5VrvrkpDHSKdjjI87HkbXJy5TMw.jpg");
+  background-size: cover;
+
+}
+</style>
+<script>
+ function validate(){
+        let product_name = document.getElementById("product_name").value
+        if(product_name==""){
+            alert("Enter Product Name")
+            return false;
+        }
+        let price = document.getElementById("price").value
+        if(price==""){
+            alert("Enter Price")
+            return false;
+        }
+         let picture = document.getElementById("picture").value
+        if(picture==""){
+            alert("Choose Picture")
+            return false;
+        }
+        let description = document.getElementById("description").value
+        if(description==""){
+            alert("Enter Description")
+            return false;
+        }
+        return true
+    }
+</script>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5">
+        <form action="/product_details1" method="post" onsubmit="return validate()" enctype="multipart/form-data">
+            <input type="hidden" name="sub_category_id" value="{{sub_category_id}}">
+            <div class="text-center h3 text-white">Product Details</div>
+            <div class="form-group">
+                <label for="product_name" class="text-white">ProductName</label>
+                <input type="text" name="product_name" id="product_name" placeholder="Enter ProductName"  class="form-control mt-1">
+            </div>
+            <div class="form-group mt-2">
+                <label for="price" class="text-white">Price</label>
+                <input type="number" name="price" id="price" placeholder="Enter Price"  class="form-control mt-1" >
+            </div>
+             <div class="form-group mt-2">
+                <label for="picture" class="text-white">Choose Picture</label>
+                <input type="file" name="picture" id="picture" class="form-control mt-1" >
+            </div>
+             <div class="form-group mt-2">
+                    <label for="description" class="text-white">About Product</label>
+                    <textarea name="description" id="description" placeholder="About Product"  class="form-control mt-1"></textarea>
+                </div>
+            <input type="submit" value="Add Product Details" class="btn btn-primary w-100 mt-3">
+        </form>
+    </div>
+</div>
+
+
+
+<!--<div class="container mt-5">-->
+
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+
+
+<!--                    <div class="form-group mt-1">-->
+<!--                        <label for="about">About</label>-->
+<!--                        <textarea name="about" id="about" placeholder="Enter About"  class="form-control mt-1"></textarea>-->
+<!--                </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="form-group">-->
+<!--                    <label for="email" >Email</label>-->
+<!--                    <input type="email" name="email" id="email" placeholder="Enter Email"  class="form-control mt-1">-->
+<!--                </div>-->
+<!--                <div class="form-group mt-2">-->
+<!--                    <label for="password" >Password</label>-->
+<!--                    <input type="password" name="password" id="password" placeholder="Enter Password"  class="form-control">-->
+<!--                </div>-->
+
+<!--                </div>-->
+<!--                <input type="submit" value="Register" class="btn btn-primary w-100 mt-3">-->
+<!--            </div>-->
+<!--        </form>-->
+<!--</div>-->

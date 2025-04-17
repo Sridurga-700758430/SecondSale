@@ -1,0 +1,80 @@
+{% include 'uhead.html'%}
+<div class="container">
+    <form action="viewProducts">
+        <div class="row">
+            <div class="col-md-3">Category
+                 <select id="category_id" name="category_id"   class="form-control">
+                    <option value="all">All</option>
+                    {% for category in  categories: %}
+                    <option value="{{category[0]}}"
+                            {% if str(category_id) == str(category[0]) :  %}
+                            selected
+                            {% endif%}
+                    >{{category[1]}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">Sub Category
+                <select id="sub_category_id" name="sub_category_id"   class="form-control" >
+                    <option value="all">All</option>
+                    {% for sub_category in  sub_categories: %}
+                    <option value="{{sub_category[0]}}"
+                            {% if str(sub_category_id) == str(sub_category[0]) :  %}
+                            selected
+                            {% endif%}
+                    >{{sub_category[1]}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 ">Search Product<label>:</label><input type="search" id="product_name" name="product_name" value="{{product_name}}" class="form-control" placeholder="Search Product" ></div>
+            <div class="col-md-3 ">
+                <br>
+                <input type="submit" value="Search" class="btn btn-primary w-100">
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container">
+    <div class="row">
+        {% for product in products%}
+           {% set product_seller = is_product_seller1(product[0])%}
+        {% set seller = get_seller_by_posted_products(product[8])%}
+        {% set sub_category = get_sub_category_by_products(product[7])%}
+        {% set category = get_category_by_sub_category(sub_category[2])%}
+        <div class="col-md-4 mt-3">
+            <div class="card p-2">
+                <a href="view_details?product_id={{product[0]}}&seller_id={{seller[0]}}"><img src="{{product[3]}}" style="width:100%;height:180px"></a>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="h4 mt-1" style="margin-left:20px">{{product[1]}}</div>
+                </div>
+                 <div class="col-md-6">
+                      <div class="h4 mt-1" style="margin-left:20px">$ {{product[2]}}</div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="h4  text-secondary" style="font-size:10px">Sub Category :</div>
+                    <div class="h4" style="font-size:12px">{{sub_category[1]}}</div>
+                </div>
+                 <div class="col-md-6">
+                     <div class="h4  text-secondary" style="font-size:10px">Category :</div>
+                      <div class="h4 " style="font-size:12px">{{category[1]}}</div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="h4 mt-1 text-secondary" style="font-size:10px">Seller :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{seller[1]}}</div>
+                 </div>
+                   <div class="col-md-6">
+                     <div class="h4 mt-1 text-secondary" style="font-size:10px">Posted Date :</div>
+                      <div class="h4 mt-1" style="font-size:12px">{{product[5]}}</div>
+                 </div>
+            </div>
+                {% if product_seller%}
+                <div class="card-footer">
+                    <a href="view_seller_requests?product_id={{product[0]}}" class="btn btn-primary">View Requests</a>
+                </div>
+                {% endif%}
+        </div>
+             </div>
+        {% endfor%}
+    </div>
+</div>

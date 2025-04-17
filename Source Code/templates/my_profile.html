@@ -1,0 +1,33 @@
+{% include 'uhead.html'%}
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="card ps-4">
+      {% for user in users:%}
+          <div class="mt-2">
+             <div class="text-muted">User Name</div>
+            <div class="mt-1"><b>{{user[1]}}</b></div>
+          </div>
+       <div class="mt-2">
+             <div class="text-muted">Phone Number</div>
+         <div class="mt-1"><b>{{user[2]}}</b></div>
+          </div>
+       <div class="mt-2">
+             <div class="text-muted">Email</div>
+         <div class="mt-1"><b>{{user[3]}}</b></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mt-2">
+               <div class="text-muted">Address</div>
+              <div class="mt-1"><b>{{user[6]}}</b></div>
+          </div>
+            <div class="col-md-6 mt-2">
+              <a href="edit_profile?user_id={{user[0]}}" class="btn btn-info w-90">Edit Profile</a>
+            </div>
+          </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

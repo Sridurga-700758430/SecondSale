@@ -1,0 +1,94 @@
+{% include 'uhead.html'%}
+<script src="https://ajax.googleapis.com/ajax/libs/
+    jquery/3.3.1/jquery.min.js">
+    </script>
+<script>
+     $(document).ready(function(){
+        $('#MyChatBox').scrollTop($('#MyChatBox')[0].scrollHeight);
+    });
+    function sendMessage(seller_id,buyer_id){
+       $.get("sendMessage?seller_id="+seller_id+"&buyer_id="+buyer_id+"&message="+$("#message").val(), function(data, status){
+         $("#message").val("");
+        });
+     }
+     setInterval(function() {
+        $.get("getMessage?seller_id="+$("#seller_id").val()+"&buyer_id="+$("#buyer_id").val(), function(data, status){
+            for(let i=0;i<data.length; i++){
+                let chatDetail = data[i];
+                let myMessage = "";
+                if($("#buyer_id").val()==chatDetail['buyer_id']){
+                    myMessage = `<div class="card mt-3 pe-2" id="${chatDetail['_id']}">
+                                        <div class="text-end text-success">${chatDetail['message']}</div>
+                                        <div class="text-end" style="font-size:50%">${chatDetail['date']}</div>
+                                   </div>`
+                }else{
+                    myMessage = `<div class="card mt-3 pe-2" id="${chatDetail['_id']}">
+                                        <div class="text-primary">${chatDetail['message']}</div>
+                                        <div class="" style="font-size:50%">${chatDetail['date']}</div>
+                                   </div>`
+                }
+                $("#MyChatBox").append(myMessage);
+                 console.log("#" + chatDetail['_id'])
+                 $('#MyChatBox').scrollTop($('#MyChatBox')[0].scrollHeight);
+
+                console.log(myMessage);
+            }
+            if(data.length>0){
+                updateMessage();
+            }
+        });
+     }, 4000);
+
+     function updateMessage(){
+         $.get("updateMessage?seller_id="+$("#seller_id").val()+"&buyer_id="+$("#from_user").val(), function(data, status){
+                console.log(data);
+          });
+     }
+</script>
+<div class="container">
+    <input type="hidden" id="seller_id" value="{{seller_id}}">
+    <input type="hidden" id="buyer_id" value="{{buyer_id}}">
+     <div class="col-md-8">
+    <div class="card" style="height:50px">
+      <div class="card-header">
+          <div class="row">
+              <div class="col-6">
+                  <div class="text-primary">To:</div>
+                  <div class="h6 text-primary"></div>
+              </div>
+              <div class="col-6">
+                  <div class="text-end text-success">You</div>
+                  <div class="h6 text-end text-success"></div>
+              </div>
+          </div>
+      </div>
+      <div class="card-body" id="myCard" >
+          <div id="MyChatBox" style="height:30vh;overflow:auto;">
+                {% for chatDetail in chatDetails: %}
+                {% if buyer_id== chatDetail['buyer_id']: %}
+                    <div class="card mt-3 pe-2">
+                        <div class="text-end text-success">{{chatDetail['message']}}</div>
+                        <div class="text-end" style="font-size:50%">{{chatDetail['date'].strftime("%c")}}</div>
+                    </div>
+                {% else: %}
+                    <div class="card mt-3 ps-2">
+                        <div class="text-primary">{{chatDetail['message']}}</div>
+                        <div class="" style="font-size:50%">{{chatDetail['date'].strftime("%c")}}</div>
+                    </div>
+                {%endif %}
+              {% endfor %}
+          </div>
+      </div>
+      <div class="card-footer">
+          <div class="row">
+              <div class="col-9">
+                  <textarea class="form-control" id="message" style="height:80px;"></textarea>
+              </div>
+              <div class="col-3">
+                  <button class="btn btn-success w-100" style="height:80px;" onclick="sendMessage('{{seller_id}}','{{buyer_id}}')">Send</button>
+              </div>
+          </div>
+      </div>
+    </div>
+         </div>
+</div>

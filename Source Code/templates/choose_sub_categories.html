@@ -1,0 +1,21 @@
+{% include 'uhead.html'%}
+<style>
+body {
+  background-image: url("https://t3.ftcdn.net/jpg/01/91/78/32/360_F_191783282_0TVrx5VrvrkpDHSKdjjI87HkbXJy5TMw.jpg");
+  background-size: cover;
+}
+</style>
+<div class="container mt-5">
+        <div class="text-center text-white h6">Choose Sub Categories</div>
+    <div class="card p-4">
+    <div class="row">
+        {% for sub_category in sub_categories%}
+        <div class="col-md-3 mt-5">
+            <div class="card p-3" style="background-color:#ddd">
+               <a href="product_details?sub_category_id={{sub_category[0]}}" class="nav-link text-center">{{sub_category[1]}}</a>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+        </div>
+</div>

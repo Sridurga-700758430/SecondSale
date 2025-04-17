@@ -1,0 +1,51 @@
+{% include 'ahead.html'%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8 mt-5">
+                    <div class="card p-4 mt-5">
+                        <form action="add_sub_Category1" method="post">
+                            <div class="text-center h4">Add SubCategory</div>
+                            <div class="from-group">
+                                <label class="subcategory_name">SubCategory Name</label>
+                                <input type="text" name="subcategory_name" id="subcategory_name" placeholder="Enter SubCategory" class="form-control mt-1" required>
+                            </div>
+                             <div class="from-group">
+                                <label class="category_id ">Choose Category</label>
+                                 <select name="category_id" id="category_id" class="form-control mt-1" required>
+                                     {% for category in categories%}
+                                     <option value="{{category[0]}}">{{category[1]}}</option>
+                                     {% endfor%}
+                                 </select>
+                            </div>
+                            <div class="mt-3">
+                                <input type="submit" value="Add SubCategory" class="btn btn-primary w-100">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-center h3 mt-5">Available SubCategories</div>
+            <table style="width:100%" class="table table-bordered">
+                <tr>
+                    <th>SubCategory Name</th>
+                    <th>Category</th>
+
+                 </tr>
+                 {% for sub_category in sub_categories%}
+                 {% set categorie = get_category_by_subCategory_id(sub_category[2])%}
+                 <tr>
+                <td>{{sub_category[1]}}</td>
+                <td>{{categorie[1]}}</td>
+                 </tr>
+                {% endfor%}
+            </table>
+        </div>
+    </div>
+  </div>
+</div>

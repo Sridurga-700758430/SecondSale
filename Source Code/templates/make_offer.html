@@ -1,0 +1,31 @@
+{% include 'uhead.html'%}
+<script>
+ function validate(){
+        let requested_amount = document.getElementById("requested_amount").value
+        if(requested_amount==""){
+            alert("Enter Amount")
+            return false;
+        }
+
+        return true
+    }
+</script>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5">
+        <div class="card p-4 mt-5">
+            <form action="/make_offer1" method="post" onsubmit="return validate()">
+                <input type="hidden" name="seller_id" value="{{seller_id}}">
+                  <input type="hidden" name="product_id" value="{{product_id}}">
+                <div class="form-group mt-1">
+                    <label class="requested_amount">Request Amount</label>
+                    <input type="text" name="requested_amount" id="requested_amount" placeholder="Enter Amount" class="form-control mt-2" >
+                </div>
+                <div class="">
+                    <input type="submit" value="Send Request" class="btn btn-primary mt-2 w-100">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

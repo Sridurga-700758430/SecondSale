@@ -1,0 +1,74 @@
+{% include 'uhead.html'%}
+<div class="container">
+    <div class="row">
+        {% for transaction in transactions%}
+        {% set product = get_product_by_transactions(transaction[7])%}
+        {% set sub_category = get_sub_category_by_transactions(product[7])%}
+        {% set category = get_category_by_transactions(sub_category[2])%}
+         {% set buyer = get_buyer_by_transactions(transaction[8])%}
+         {% set seller = get_seller_by_transactions(transaction[9])%}
+        <div class="col-md-4 mt-3">
+            <div class="card p-2">
+             <img src="/static/Product_Images/{{product[3]}}" style="width:100%;height:210px">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="h4 mt-1" style="margin-left:20px">{{product[1]}}</div>
+                </div>
+                 <div class="col-md-6">
+                     <div class="h4 mt-1 text-secondary" style="font-size:10px">Requested Amount:</div>
+                      <div class="h6 mt-1" style="margin-left:20px">$ {{transaction[1]}}</div>
+                 </div>
+                 <div class="col-md-6">
+                     <div class="h4  text-secondary" style="font-size:10px">Sub Category :</div>
+                    <div class="h4" style="font-size:12px">{{sub_category[1]}}</div>
+                </div>
+                 <div class="col-md-6">
+                     <div class="h4  text-secondary" style="font-size:10px">Category :</div>
+                      <div class="h4 " style="font-size:12px">{{category[1]}}</div>
+                 </div>
+                 <div class="col-md-6">
+                <div class="h4 mt-1 text-secondary" style="font-size:10px">Buyer :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{buyer[1]}}</div>
+                 </div>
+                  <div class="col-md-6">
+                <div class="h4 mt-1 text-secondary" style="font-size:10px">Seller :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{seller[1]}}</div>
+                 </div>
+                <div class="col-md-6">
+                <div class="h4 mt-1 text-secondary" style="font-size:10px">Status :</div>
+                      <div class="h4 mt-1" style="font-size:15px">{{transaction[4]}}</div>
+                 </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    {% if transaction[4] =='Requested'%}
+                    <div class="col-md-6">
+                        <form action="accept" method="post">
+                            <input type="hidden" name="transaction_id" value="{{transaction[0]}}">
+                            <input type="submit" value="Accept" class="btn btn-success w-100">
+                        </form>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="reject" method="post">
+                            <input type="hidden" name="transaction_id" value="{{transaction['_id']}}">
+                            <input type="submit" value="Reject" class="btn btn-danger w-100">
+                        </form>
+                    </div>
+
+                    {% endif%}
+                    {% if transaction[4] =='Product Return Request Sent'%}
+                    <div class="col-md-6">
+                        <form action="accept_return_request" method="post">
+                            <input type="hidden" name="transaction_id" value="{{transaction[0]}}">
+                            <input type="submit" value="Accept Return Request" class="btn btn-primary w-100">
+                        </form>
+                    </div>
+                    {% endif%}
+                </div>
+            </div>
+        </div>
+             </div>
+        {% endfor%}
+    </div>
+</div>
